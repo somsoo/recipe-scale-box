@@ -7,18 +7,18 @@
 
     <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
-    <title>요리 레시피 보관함 & 인분 스케일러 | 1인분 계량</title>
-    <meta content="요리 블로그 광고 공해 없이 깔끔하게 레시피를 보관하고, 1인분/2인분/4인분 재료량을 원클릭으로 n배 자동 환산 무료." name="description"/>
+    <title>레시피 보관함 &amp; 인분 스케일러 | 재료량 자동 계산</title>
+    <meta content="요리 레시피를 깔끔하게 보관하고, 1인분·2인분·4인분 재료량을 원클릭으로 배수 자동 환산합니다." name="description"/>
     <link href="https://recipe.enjoy-onepage.com/" rel="canonical"/>
     <meta content="website" property="og:type"/>
     <meta property="og:locale" content="ko_KR">
     <meta content="https://recipe.enjoy-onepage.com/" property="og:url"/>
-    <meta content="Recipe Box - 레시피 보관 & 인분 스케일러" property="og:title"/>
-    <meta content="인터넷 레시피의 재료량을 1인분, 2인분, 4인분으로 즉시 배수 계산하고 저장하는 주방 필수 도구입니다." property="og:description"/>
+    <meta content="레시피 보관함 &amp; 인분 스케일러 | 재료량 자동 계산" property="og:title"/>
+    <meta content="요리 레시피를 깔끔하게 보관하고, 1인분·2인분·4인분 재료량을 원클릭으로 배수 자동 환산합니다." property="og:description"/>
     <meta content="https://recipe.enjoy-onepage.com/og-image.png" property="og:image"/>
     <meta content="summary_large_image" name="twitter:card"/>
-    <meta content="Recipe Box - 레시피 보관 & 인분 스케일러" name="twitter:title"/>
-    <meta content="인터넷 레시피의 재료량을 1인분, 2인분, 4인분으로 즉시 배수 계산하고 저장하는 주방 필수 도구입니다." name="twitter:description"/>
+    <meta content="레시피 보관함 &amp; 인분 스케일러 | 재료량 자동 계산" name="twitter:title"/>
+    <meta content="요리 레시피를 깔끔하게 보관하고, 1인분·2인분·4인분 재료량을 원클릭으로 배수 자동 환산합니다." name="twitter:description"/>
     <meta content="https://recipe.enjoy-onepage.com/og-image.png" name="twitter:image"/>
     <link href="/favicon.ico" rel="icon" type="image/x-icon"/>
 
@@ -426,12 +426,13 @@ class="manual-ad-box ad-bottom-banner" style="width: 100%; max-width: 960px; mar
         }
 
         function renderScaled() {
-            const ratio = recipe.targetServings / recipe.baseServings;
-            document.getElementById('currentServingText').innerText = `${recipe.targetServings}인분`;
-            document.getElementById('scaleRatioSub').innerText = `배수: ${ratio.toFixed(2)}x (기준 ${recipe.baseServings}인분)`;
-            document.getElementById('viewTitle').innerText = recipe.title;
-            document.getElementById('viewTime').innerText = recipe.time;
-            document.getElementById('viewServingBadge').innerText = `${recipe.targetServings}인분 계량`;
+            const baseServings = Math.max(1, parseInt(recipe.baseServings, 10) || 1);
+            const ratio = (recipe.targetServings || 1) / baseServings;
+            document.getElementById('currentServingText').textContent = `${recipe.targetServings}인분`;
+            document.getElementById('scaleRatioSub').textContent = `배수: ${ratio.toFixed(2)}x (기준 ${recipe.baseServings}인분)`;
+            document.getElementById('viewTitle').textContent = recipe.title;
+            document.getElementById('viewTime').textContent = recipe.time;
+            document.getElementById('viewServingBadge').textContent = `${recipe.targetServings}인분 계량`;
 
             const container = document.getElementById('scaledListContainer');
             container.innerHTML = '';
